@@ -23,7 +23,9 @@ export default function Header() {
       <div className="flex-1 flex flex-col">
         {/* Header en top */}
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
-          <h1 className="text-2xl font-bold">MonSite</h1>
+          <a href="#">
+              <h1 className="text-2xl font-bold">MonSite</h1>
+          </a>
 
           {/* AuthForm Desktop */}
           {!isMobile && (

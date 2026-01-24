@@ -66,7 +66,9 @@ export default function AuthForm() {
 
     try {
       await axios.post(`${API_URL}/login`, { username, password });
-      router.push("/dashboard");
+
+      // 🔹 Redirection vers page de transition pour UX
+      router.push("/transitionPage");
     } catch (err: any) {
       setFeedback(err.response?.data?.error || "Erreur login");
     }
@@ -106,9 +108,7 @@ export default function AuthForm() {
         </div>
       )}
 
-      {feedback && (
-        <div className="text-sm mb-2 text-red-600">{feedback}</div>
-      )}
+      {feedback && <div className="text-sm mb-2 text-red-600">{feedback}</div>}
 
       <button
         onClick={isSignup ? signup : login}

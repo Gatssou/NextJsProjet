@@ -31,7 +31,9 @@ export default function Signup() {
       router.push("/"); // redirection login
     } catch (err: any) {
       setFeedback(err.response?.data?.error || "Erreur lors de l'inscription");
+      
     }
+  
     /* --- PRODUCTION ---
     await axios.post("https://mon-back-prod.com/signup", { username, password }, {
       withCredentials: true, // si cookie httpOnly

@@ -7,10 +7,9 @@ import ConnectedHeader from "../components/ConnectedHeader/page";
 
 axios.defaults.withCredentials = true;
 
-export default function DashboardPage() {
+export default function ConnectedPage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  const [loading, setLoading] = useState(true); // état de chargement pour vérifier le token
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -20,8 +19,7 @@ export default function DashboardPage() {
           // ❌ Non connecté → redirection vers /
           router.replace("/");
         } else {
-          // ✅ Connecté → on récupère l'utilisateur et on affiche le contenu
-          setUser(res.data.user);
+          // ✅ Connecté → on affiche la page
           setLoading(false);
         }
       } catch (err) {
@@ -45,13 +43,12 @@ export default function DashboardPage() {
       <ConnectedHeader />
 
       <main className="flex-1 p-6 bg-gray-100">
-        <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-        <p className="mb-2">Bienvenue <span className="font-semibold">{user?.username}</span> !</p>
-        <p>Ici tu pourras gérer ton compte, voir tes posts, fanarts et futurs jeux tour par tour.</p>
+        <h2 className="text-2xl font-bold mb-4">Bienvenue sur MonSite connecté</h2>
+        <p>Placeholders pour fanart, posts et futurs jeux tour par tour.</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded shadow">Gestion Fanart</div>
-          <div className="bg-white p-4 rounded shadow">Gestion Posts</div>
+          <div className="bg-white p-4 rounded shadow">Fanart placeholder</div>
+          <div className="bg-white p-4 rounded shadow">Posts placeholder</div>
         </div>
       </main>
     </div>
