@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import AuthForm from "../AuthForm";
 import MobileOverlay from "../MobileOverlay/page";
+import Sidebar from "../Sidebar/page";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,20 +16,44 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="flex justify-between items-center p-4 bg-white shadow-md">
-      <h1 className="text-2xl font-bold">MonSite</h1>
-      {!isMobile && <AuthForm />}
-      {isMobile && (
-        <>
-          <button
-            className="p-2 border rounded text-xl"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            ☰
-          </button>
-          {menuOpen && <MobileOverlay onClose={() => setMenuOpen(false)} />}
-        </>
-      )}
-    </header>
+    <div className="flex flex-col md:flex-row min-h-screen">
+      {/* Sidebar à gauche */}
+      <Sidebar isMobile={isMobile} />
+
+      <div className="flex-1 flex flex-col">
+        {/* Header en top */}
+        <header className="flex justify-between items-center p-4 bg-white shadow-md">
+          <h1 className="text-2xl font-bold">MonSite</h1>
+
+          {/* AuthForm Desktop */}
+          {!isMobile && (
+            <div className="w-80">
+              <AuthForm />
+            </div>
+          )}
+
+          {/* Menu burger Mobile */}
+          {isMobile && (
+            <button
+              className="p-2 border rounded text-xl"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              ☰
+            </button>
+          )}
+        </header>
+
+        {/* Overlay mobile */}
+        {isMobile && menuOpen && (
+          <MobileOverlay onClose={() => setMenuOpen(false)} />
+        )}
+
+        {/* Main content */}
+        <main className="p-6 flex-1">
+          <h2 className="text-xl font-bold">Contenu principal</h2>
+          <p>Placeholders pour fanart, posts et futurs jeux...</p>
+        </main>
+      </div>
+    </div>
   );
 }
