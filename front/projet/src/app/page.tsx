@@ -1,65 +1,16 @@
 "use client";
-
-import { useState } from "react";
-import axios from "axios";
-
-const API_URL = "http://localhost:5000";
+import Header from "../app/components/Header/page";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
-
-  const signup = async () => {
-    await axios.post(`${API_URL}/signup`, {
-      username,
-      password,
-    });
-    alert("Utilisateur créé");
-  };
-
-  const login = async () => {
-    const res = await axios.post(`${API_URL}/login`, {
-      username,
-      password,
-    });
-    setToken(res.data.token);
-    alert("Connecté");
-  };
-
-  const protectedRoute = async () => {
-    const res = await axios.get(`${API_URL}/protected`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    alert(JSON.stringify(res.data));
-  };
-
   return (
-    <main style={{ padding: 30 }}>
-      <h1>Test Auth Next.js + API</h1>
-
-      <input
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <br /><br />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
-
-      <button onClick={signup}>Signup</button>{" "}
-      <button onClick={login}>Login</button>{" "}
-      <button onClick={protectedRoute} disabled={!token}>
-        Protected
-      </button>
+    <main className="min-h-screen bg-gray-100">
+      <Header />
+      <section className="p-10 text-center">
+        <h2 className="text-xl md:text-2xl font-bold">Bienvenue sur MonSite</h2>
+        <p className="mt-4 text-gray-700">
+          Connectez-vous ou inscrivez-vous pour accéder à votre dashboard.
+        </p>
+      </section>
     </main>
   );
 }
