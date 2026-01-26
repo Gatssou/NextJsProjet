@@ -16,6 +16,8 @@ export default function SignUpPage() {
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   const signup = async () => {
+
+    
     if (!username || !password) {
       setFeedback("Veuillez remplir tous les champs !");
       return;
