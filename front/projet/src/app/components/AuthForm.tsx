@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
@@ -14,7 +14,6 @@ export default function AuthForm() {
   const [passwordFeedback, setPasswordFeedback] = useState("");
   const router = useRouter();
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   const handlePasswordChange = (value: string) => {
@@ -23,13 +22,11 @@ export default function AuthForm() {
       setPasswordFeedback("");
       return;
     }
-    if (!passwordRegex.test(value)) {
-      setPasswordFeedback(
-        "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
-      );
-    } else {
-      setPasswordFeedback("Mot de passe correct ✔");
-    }
+    setPasswordFeedback(
+      passwordRegex.test(value)
+        ? "Mot de passe correct ✔"
+        : "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
+    );
   };
 
   const signup = async () => {
@@ -39,15 +36,13 @@ export default function AuthForm() {
       return;
     }
     if (!passwordRegex.test(password)) {
-      setFeedback(
-        "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
-      );
+      setFeedback("Mot de passe trop faible !");
       return;
     }
 
     try {
-      await axios.post(`${API_URL}/signup`, { username, password });
-      alert("Utilisateur créé ! Vous pouvez maintenant vous connecter.");
+      const res = await axios.post("/api/signup", { username, password });
+      alert(res.data.message || "Utilisateur créé !");
       setIsSignup(false);
       setUsername("");
       setPassword("");
@@ -65,10 +60,10 @@ export default function AuthForm() {
     }
 
     try {
-      await axios.post(`${API_URL}/login`, { username, password });
-
-      // 🔹 Redirection vers page de transition pour UX
-      router.push("/transitionPage");
+      const res = await axios.post("/api/login", { username, password });
+      if (res.data.success) {
+        router.push("/transitionPage"); // page de transition avant connectedPage
+      }
     } catch (err: any) {
       setFeedback(err.response?.data?.error || "Erreur login");
     }
@@ -83,20 +78,20 @@ export default function AuthForm() {
         {isSignup ? "Signup" : "Login"}
       </h2>
 
-  <input
-  className="w-full p-2 mb-3 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  placeholder="Nom d'utilisateur"
-  value={username}
-  onChange={(e) => setUsername(e.target.value)}
-/>
+      <input
+        className="w-full p-2 mb-3 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Nom d'utilisateur"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
 
-    <input
-  type="password"
-  className="w-full p-2 mb-2 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  placeholder="Mot de passe"
-  value={password}
-  onChange={(e) => handlePasswordChange(e.target.value)}
-/>
+      <input
+        type="password"
+        className="w-full p-2 mb-2 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Mot de passe"
+        value={password}
+        onChange={(e) => handlePasswordChange(e.target.value)}
+      />
 
       {isSignup && passwordFeedback && (
         <div
