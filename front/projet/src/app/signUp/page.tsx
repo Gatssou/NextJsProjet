@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 axios.defaults.withCredentials = true;
 
-export default function Signup() {
+export default function SignUpPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -28,13 +28,13 @@ export default function Signup() {
     }
 
     try {
-      // ⚡ POST vers ton API Next.js
-      await axios.post("/api/signUp", { username, password });
-      
-      alert("Utilisateur créé ! Vous pouvez maintenant vous connecter.");
-      router.push("/"); // redirection login
+      const res = await axios.post("/api/signup", { username, password });
+
+      if (res.data.user) {
+        alert("Utilisateur créé ! Vous pouvez maintenant vous connecter.");
+        router.push("/"); // redirection login
+      }
     } catch (err: any) {
-      // ⚡ Logging complet côté frontend
       console.error("SIGNUP ERROR:", err);
       setFeedback(
         err.response?.data?.error || "Erreur lors de l'inscription"
