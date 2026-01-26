@@ -17,7 +17,7 @@ export default function DashboardPage() {
     const verifyAuth = async () => {
       try {
         // ⚠️ Utilisation chemin relatif pour prod et local
-        const res = await axios.get("/api/auth/verify");
+     const res = await axios.get("/api/auth/verify", { withCredentials: true });
 
         if (!res.data.authenticated) {
           router.replace("/");
