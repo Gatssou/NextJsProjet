@@ -12,16 +12,22 @@ export default function AuthForm() {
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
   const [passwordFeedback, setPasswordFeedback] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
+
+    if (!isSignup) return; // ⬅️ IMPORTANT : feedback seulement en signup
+
     if (!value) {
       setPasswordFeedback("");
       return;
     }
+
     setPasswordFeedback(
       passwordRegex.test(value)
         ? "Mot de passe correct ✔"
@@ -31,17 +37,26 @@ export default function AuthForm() {
 
   const signup = async () => {
     setFeedback("");
+    setLoading(true);
+
     if (!username || !password) {
       setFeedback("Veuillez remplir tous les champs !");
+      setLoading(false);
       return;
     }
+
     if (!passwordRegex.test(password)) {
       setFeedback("Mot de passe trop faible !");
+      setLoading(false);
       return;
     }
 
     try {
-      const res = await axios.post("/api/signup", { username, password });
+      const res = await axios.post("/api/signup", {
+        username: username.trim(),
+        password,
+      });
+
       alert(res.data.message || "Utilisateur créé !");
       setIsSignup(false);
       setUsername("");
@@ -49,28 +64,38 @@ export default function AuthForm() {
       setPasswordFeedback("");
     } catch (err: any) {
       setFeedback(err.response?.data?.error || "Erreur lors de l'inscription");
+    } finally {
+      setLoading(false);
     }
   };
 
   const login = async () => {
     setFeedback("");
+    setLoading(true);
+
     if (!username || !password) {
       setFeedback("Veuillez remplir tous les champs !");
+      setLoading(false);
       return;
     }
 
     try {
-      const res = await axios.post("/api/login", { username, password });
-      if (res.data.success) {
-        router.push("/transitionPage"); // page de transition avant connectedPage
-      }
+      await axios.post("/api/login", {
+        username: username.trim(),
+        password,
+      });
+
+      // ✅ Le cookie JWT est posé ici
+      router.replace("/transitionPage");
     } catch (err: any) {
-      setFeedback(err.response?.data?.error || "Erreur login");
+      setFeedback(err.response?.data?.error || "Identifiants invalides");
+    } finally {
+      setLoading(false);
     }
   };
 
   const isButtonDisabled =
-    !username || !password || (isSignup && !passwordRegex.test(password));
+    loading || !username || !password || (isSignup && !passwordRegex.test(password));
 
   return (
     <div className="bg-white shadow-lg p-6 rounded-lg w-80 max-w-full animate-fade">
@@ -79,7 +104,7 @@ export default function AuthForm() {
       </h2>
 
       <input
-        className="w-full p-2 mb-3 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full p-2 mb-3 border border-gray-400 rounded text-black"
         placeholder="Nom d'utilisateur"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -87,7 +112,7 @@ export default function AuthForm() {
 
       <input
         type="password"
-        className="w-full p-2 mb-2 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full p-2 mb-2 border border-gray-400 rounded text-black"
         placeholder="Mot de passe"
         value={password}
         onChange={(e) => handlePasswordChange(e.target.value)}
@@ -96,7 +121,9 @@ export default function AuthForm() {
       {isSignup && passwordFeedback && (
         <div
           className={`text-sm mb-2 ${
-            passwordFeedback.includes("correct") ? "text-green-600" : "text-red-600"
+            passwordFeedback.includes("correct")
+              ? "text-green-600"
+              : "text-red-600"
           }`}
         >
           {passwordFeedback}
@@ -110,16 +137,20 @@ export default function AuthForm() {
         disabled={isButtonDisabled}
         className={`w-full p-2 mt-2 rounded text-white ${
           isButtonDisabled
-            ? "bg-gray-400 cursor-not-allowed"
+            ? "bg-gray-400"
             : isSignup
             ? "bg-green-600 hover:bg-green-700"
             : "bg-blue-600 hover:bg-blue-700"
         }`}
       >
-        {isSignup ? "Créer un compte" : "Se connecter"}
+        {loading
+          ? "Chargement..."
+          : isSignup
+          ? "Créer un compte"
+          : "Se connecter"}
       </button>
 
-      <div className="text-sm mt-4 text-center text-red-600">
+      <div className="text-sm mt-4 text-center">
         {isSignup ? (
           <>
             Déjà un compte ?{" "}
