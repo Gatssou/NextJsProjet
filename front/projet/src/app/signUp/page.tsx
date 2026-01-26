@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+// On garde withCredentials si JWT est stocké en cookie httpOnly
 axios.defaults.withCredentials = true;
 
 export default function SignUpPage() {
@@ -28,6 +29,7 @@ export default function SignUpPage() {
     }
 
     try {
+      // ✅ Appel relatif vers l'API Next.js, fonctionne en local et production Vercel
       const res = await axios.post("/api/signup", { username, password });
 
       if (res.data.user) {
@@ -35,7 +37,10 @@ export default function SignUpPage() {
         router.push("/"); // redirection login
       }
     } catch (err: any) {
-      console.error("SIGNUP ERROR:", err);
+      // Logging complet pour savoir exactement ce qui échoue
+      console.error("SIGNUP ERROR FRONTEND:", err);
+      console.log("ERR RESPONSE DATA:", err.response?.data);
+
       setFeedback(
         err.response?.data?.error || "Erreur lors de l'inscription"
       );
