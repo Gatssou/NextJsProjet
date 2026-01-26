@@ -37,7 +37,7 @@ export default function Header() {
           {/* Menu burger Mobile */}
           {isMobile && (
             <button
-              className="p-2 border rounded text-xl"
+              className="p-2 border rounded text-xl border-black text-black"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               ☰
