@@ -14,7 +14,9 @@ export default function ConnectedPage() {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/auth/verify");
+        // ✅ Utilise la route Next.js API, pas localhost:5000
+        const res = await axios.get("/api/auth/verify");
+
         if (!res.data.authenticated) {
           // ❌ Non connecté → redirection vers /
           router.replace("/");
@@ -23,10 +25,12 @@ export default function ConnectedPage() {
           setLoading(false);
         }
       } catch (err) {
+        console.error("Erreur verify:", err);
         // ❌ Erreur / pas de token → redirection vers /
         router.replace("/");
       }
     };
+
     verifyAuth();
   }, [router]);
 
@@ -43,7 +47,9 @@ export default function ConnectedPage() {
       <ConnectedHeader />
 
       <main className="flex-1 p-6 bg-gray-100">
-        <h2 className="text-2xl font-bold mb-4 text-black">Bienvenue sur MonSite connecté</h2>
+        <h2 className="text-2xl font-bold mb-4 text-black">
+          Bienvenue sur MonSite connecté
+        </h2>
         <p>Placeholders pour fanart, posts et futurs jeux tour par tour.</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-black">

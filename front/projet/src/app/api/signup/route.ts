@@ -1,18 +1,16 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "../../../lib/prisma";
 
 export async function POST(req: Request) {
   try {
     const { username, password } = await req.json();
 
     if (!username || !password) {
-      return NextResponse.json(
-        { error: "Champs requis" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Champs requis" }, { status: 400 });
     }
 
+    // Force mot de passe
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
       return NextResponse.json(
@@ -21,35 +19,26 @@ export async function POST(req: Request) {
       );
     }
 
-    // 🔍 Vérifier si l'utilisateur existe déjà
-    const existingUser = await prisma.user.findUnique({
+    // Vérifie si utilisateur existe déjà
+    const exists = await prisma.user.findUnique({
       where: { username },
     });
-
-    if (existingUser) {
+    if (exists) {
       return NextResponse.json(
         { error: "Nom d'utilisateur déjà utilisé" },
         { status: 400 }
       );
     }
 
-    // 🔐 Hash du mot de passe
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // 💾 Création en base
+    // Hash du mot de passe et création utilisateur
+    const hashed = await bcrypt.hash(password, 12);
     await prisma.user.create({
-      data: {
-        username,
-        password: hashedPassword,
-      },
+      data: { username, password: hashed },
     });
 
     return NextResponse.json({ message: "Utilisateur créé !" });
   } catch (err) {
     console.error("SIGNUP ERROR:", err);
-    return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

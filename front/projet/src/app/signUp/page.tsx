@@ -21,24 +21,25 @@ export default function Signup() {
     }
 
     if (!passwordRegex.test(password)) {
-      setFeedback("Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre");
+      setFeedback(
+        "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
+      );
       return;
     }
 
     try {
-      await axios.post("http://localhost:5000/signup", { username, password });
+      // ⚡ POST vers ton API Next.js
+      await axios.post("/api/signup", { username, password });
+      
       alert("Utilisateur créé ! Vous pouvez maintenant vous connecter.");
       router.push("/"); // redirection login
     } catch (err: any) {
-      setFeedback(err.response?.data?.error || "Erreur lors de l'inscription");
-      
+      // ⚡ Logging complet côté frontend
+      console.error("SIGNUP ERROR:", err);
+      setFeedback(
+        err.response?.data?.error || "Erreur lors de l'inscription"
+      );
     }
-  
-    /* --- PRODUCTION ---
-    await axios.post("https://mon-back-prod.com/signup", { username, password }, {
-      withCredentials: true, // si cookie httpOnly
-    });
-    */
   };
 
   return (
@@ -61,13 +62,16 @@ export default function Signup() {
           if (!e.target.value) {
             setFeedback("");
           } else if (!passwordRegex.test(e.target.value)) {
-            setFeedback("Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre");
+            setFeedback(
+              "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
+            );
           } else {
             setFeedback("Mot de passe correct ✔");
           }
         }}
       />
-      <br /><br />
+      <br />
+      <br />
 
       {feedback && (
         <div
