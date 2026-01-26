@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +10,7 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Fanart", href: "/fanart" }, // <-- valeurs uniques temporaires
+  { label: "Fanart", href: "/fanart" },
   { label: "Posts", href: "/posts" },
   { label: "Jeux", href: "/jeux" },
 ];
@@ -20,7 +21,8 @@ export default function ConnectedHeader() {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:5000/logout", {
+      // ⚠️ On utilise chemin relatif pour prod et local
+      await fetch("/api/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -32,7 +34,10 @@ export default function ConnectedHeader() {
 
   return (
     <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-md flex justify-between items-center">
-      <h1 className="text-2xl font-bold cursor-pointer" onClick={() => router.push("/connectedPage")}>
+      <h1
+        className="text-2xl font-bold cursor-pointer"
+        onClick={() => router.push("/dashboard")}
+      >
         MonSite
       </h1>
 
