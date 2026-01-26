@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import AuthForm from "../AuthForm";
-import MobileOverlay from "../MobileOverlay/page";
-import Sidebar from "../Sidebar/page";
+import MobileOverlay from "../MobileOverlay/MobileOverlay";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

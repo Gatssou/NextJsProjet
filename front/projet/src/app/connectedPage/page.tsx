@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import ConnectedHeader from "../components/ConnectedHeader/page";
+import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
 
 axios.defaults.withCredentials = true;
 
