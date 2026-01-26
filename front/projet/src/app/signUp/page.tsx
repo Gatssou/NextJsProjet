@@ -28,10 +28,13 @@ export default function Signup() {
     }
 
     try {
+      // ⚡ POST vers ton API Next.js
       await axios.post("/api/signUp", { username, password });
+      
       alert("Utilisateur créé ! Vous pouvez maintenant vous connecter.");
       router.push("/"); // redirection login
     } catch (err: any) {
+      // ⚡ Logging complet côté frontend
       console.error("SIGNUP ERROR:", err);
       setFeedback(
         err.response?.data?.error || "Erreur lors de l'inscription"
@@ -42,20 +45,34 @@ export default function Signup() {
   return (
     <main style={{ padding: 30 }}>
       <h1>Signup</h1>
+
       <input
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <br />
+
       <input
         type="password"
         placeholder="Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          if (!e.target.value) {
+            setFeedback("");
+          } else if (!passwordRegex.test(e.target.value)) {
+            setFeedback(
+              "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
+            );
+          } else {
+            setFeedback("Mot de passe correct ✔");
+          }
+        }}
       />
       <br />
       <br />
+
       {feedback && (
         <div
           style={{
@@ -66,7 +83,9 @@ export default function Signup() {
           {feedback}
         </div>
       )}
+
       <button onClick={signup}>Créer un compte</button>
+
       <p style={{ marginTop: 15 }}>
         Déjà un compte ? <a href="/">Connectez-vous</a>
       </p>
