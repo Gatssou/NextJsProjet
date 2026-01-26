@@ -43,10 +43,10 @@ export default function ConnectedPage() {
       <ConnectedHeader />
 
       <main className="flex-1 p-6 bg-gray-100">
-        <h2 className="text-2xl font-bold mb-4">Bienvenue sur MonSite connecté</h2>
+        <h2 className="text-2xl font-bold mb-4 text-black">Bienvenue sur MonSite connecté</h2>
         <p>Placeholders pour fanart, posts et futurs jeux tour par tour.</p>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
           <div className="bg-white p-4 rounded shadow">Fanart placeholder</div>
           <div className="bg-white p-4 rounded shadow">Posts placeholder</div>
         </div>
