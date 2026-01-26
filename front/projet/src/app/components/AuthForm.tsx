@@ -79,24 +79,24 @@ export default function AuthForm() {
 
   return (
     <div className="bg-white shadow-lg p-6 rounded-lg w-80 max-w-full animate-fade">
-      <h2 className="text-xl font-bold mb-4 text-center">
+      <h2 className="text-xl font-bold mb-4 text-center text-blue-500">
         {isSignup ? "Signup" : "Login"}
       </h2>
 
-      <input
-        className="w-full p-2 mb-3 border rounded"
-        placeholder="Nom d'utilisateur"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+  <input
+  className="w-full p-2 mb-3 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  placeholder="Nom d'utilisateur"
+  value={username}
+  onChange={(e) => setUsername(e.target.value)}
+/>
 
-      <input
-        type="password"
-        className="w-full p-2 mb-2 border rounded"
-        placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => handlePasswordChange(e.target.value)}
-      />
+    <input
+  type="password"
+  className="w-full p-2 mb-2 border border-gray-400 rounded text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  placeholder="Mot de passe"
+  value={password}
+  onChange={(e) => handlePasswordChange(e.target.value)}
+/>
 
       {isSignup && passwordFeedback && (
         <div
@@ -124,7 +124,7 @@ export default function AuthForm() {
         {isSignup ? "Créer un compte" : "Se connecter"}
       </button>
 
-      <div className="text-sm mt-4 text-center">
+      <div className="text-sm mt-4 text-center text-red-600">
         {isSignup ? (
           <>
             Déjà un compte ?{" "}

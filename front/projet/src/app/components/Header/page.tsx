@@ -24,7 +24,7 @@ export default function Header() {
         {/* Header en top */}
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
           <a href="#">
-              <h1 className="text-2xl font-bold">MonSite</h1>
+              <h1 className="text-2xl font-bold text-red-600">MonSite</h1>
           </a>
 
           {/* AuthForm Desktop */}
@@ -51,8 +51,8 @@ export default function Header() {
         )}
 
         {/* Main content */}
-        <main className="p-6 flex-1">
-          <h2 className="text-xl font-bold">Contenu principal</h2>
+        <main className="p-6 flex-1 text-black">
+          <h2 className="text-xl font-bold text-black">Contenu principal</h2>
           <p>Placeholders pour fanart, posts et futurs jeux...</p>
         </main>
       </div>

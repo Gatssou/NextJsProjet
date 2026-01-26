@@ -25,7 +25,7 @@ export default function TransitionPage() {
         />
       </div>
 
-      <h2 className="text-2xl font-bold mb-4">Connexion réussie !</h2>
+      <h2 className="text-2xl font-bold mb-4 text-green-600">Connexion réussie !</h2>
       <p className="text-gray-700 mb-6">Redirection vers votre tableau de bord...</p>
 
       {/* Loader animé */}
