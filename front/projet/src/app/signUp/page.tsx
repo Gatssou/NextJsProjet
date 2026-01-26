@@ -1,94 +1,64 @@
-"use client";
+// src/app/api/signup/route.ts
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
-import { useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+// ⚡ Crée un client Prisma global pour éviter les problèmes en production
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
+export const prisma =
+  globalForPrisma.prisma ?? new PrismaClient();
 
-axios.defaults.withCredentials = true;
+if (!globalForPrisma.prisma) globalForPrisma.prisma = prisma;
 
-export default function Signup() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [feedback, setFeedback] = useState("");
-  const router = useRouter();
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { username, password } = body;
 
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-  const signup = async () => {
+    // Validation basique
     if (!username || !password) {
-      setFeedback("Veuillez remplir tous les champs !");
-      return;
-    }
-
-    if (!passwordRegex.test(password)) {
-      setFeedback(
-        "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
-      );
-      return;
-    }
-
-    try {
-      // ⚡ POST vers ton API Next.js
-      await axios.post("/api/signup", { username, password });
-      
-      alert("Utilisateur créé ! Vous pouvez maintenant vous connecter.");
-      router.push("/"); // redirection login
-    } catch (err: any) {
-      // ⚡ Logging complet côté frontend
-      console.error("SIGNUP ERROR:", err);
-      setFeedback(
-        err.response?.data?.error || "Erreur lors de l'inscription"
+      return new Response(
+        JSON.stringify({ error: "Champs manquants" }),
+        { status: 400 }
       );
     }
-  };
 
-  return (
-    <main style={{ padding: 30 }}>
-      <h1>Signup</h1>
+    // Vérifier si l'utilisateur existe déjà
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
+    });
 
-      <input
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <br />
+    if (existingUser) {
+      return new Response(
+        JSON.stringify({ error: "Nom d'utilisateur déjà pris" }),
+        { status: 400 }
+      );
+    }
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-          if (!e.target.value) {
-            setFeedback("");
-          } else if (!passwordRegex.test(e.target.value)) {
-            setFeedback(
-              "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
-            );
-          } else {
-            setFeedback("Mot de passe correct ✔");
-          }
-        }}
-      />
-      <br />
-      <br />
+    // Hash du mot de passe
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-      {feedback && (
-        <div
-          style={{
-            color: feedback.includes("correct") ? "green" : "red",
-            marginBottom: 10,
-          }}
-        >
-          {feedback}
-        </div>
-      )}
+    // Création de l'utilisateur
+    const newUser = await prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword,
+      },
+    });
 
-      <button onClick={signup}>Créer un compte</button>
+    // ⚡ Log pour débug production
+    console.log("Nouvel utilisateur créé :", newUser);
 
-      <p style={{ marginTop: 15 }}>
-        Déjà un compte ? <a href="/">Connectez-vous</a>
-      </p>
-    </main>
-  );
+    return new Response(
+      JSON.stringify({ user: { id: newUser.id, username: newUser.username } }),
+      { status: 200 }
+    );
+  } catch (err: any) {
+    // ⚡ Log complet pour voir l'erreur dans Vercel
+    console.error("SIGNUP ERROR:", err);
+
+    return new Response(
+      JSON.stringify({ error: err.message || "Erreur serveur" }),
+      { status: 500 }
+    );
+  }
 }
