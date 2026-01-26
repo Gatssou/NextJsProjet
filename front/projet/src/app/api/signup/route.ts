@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-
-const users: { username: string; password: string }[] = [];
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
@@ -22,18 +21,28 @@ export async function POST(req: Request) {
       );
     }
 
-    const exists = users.find(
-      u => u.username.toLowerCase() === username.toLowerCase()
-    );
-    if (exists) {
+    // 🔍 Vérifier si l'utilisateur existe déjà
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
+    });
+
+    if (existingUser) {
       return NextResponse.json(
         { error: "Nom d'utilisateur déjà utilisé" },
         { status: 400 }
       );
     }
 
-    const hashed = await bcrypt.hash(password, 12);
-    users.push({ username, password: hashed });
+    // 🔐 Hash du mot de passe
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // 💾 Création en base
+    await prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword,
+      },
+    });
 
     return NextResponse.json({ message: "Utilisateur créé !" });
   } catch (err) {

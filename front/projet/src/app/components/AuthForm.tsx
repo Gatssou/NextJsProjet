@@ -150,7 +150,7 @@ export default function AuthForm() {
           : "Se connecter"}
       </button>
 
-      <div className="text-sm mt-4 text-center">
+      <div className="text-sm mt-4 text-center text-blue-300">
         {isSignup ? (
           <>
             Déjà un compte ?{" "}
@@ -162,7 +162,7 @@ export default function AuthForm() {
                 setUsername("");
                 setPassword("");
               }}
-              className="text-blue-600 hover:underline"
+              className="text-blue-600 hover:underline "
             >
               Connectez-vous
             </button>
