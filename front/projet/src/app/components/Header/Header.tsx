@@ -53,7 +53,7 @@ export default function Header() {
         {/* Main content */}
         <main className="p-6 flex-1 text-black">
           <h2 className="text-xl font-bold text-black">Contenu principal</h2>
-          <p>Placeholders pour fanart, posts et futurs jeux...</p>
+          <p>Placeholders pour fanart, posts et futurs jeux etc</p>
         </main>
       </div>
     </div>
