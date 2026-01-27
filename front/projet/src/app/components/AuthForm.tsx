@@ -137,7 +137,7 @@ export default function AuthForm() {
         disabled={isButtonDisabled}
         className={`w-full p-2 mt-2 rounded text-white ${
           isButtonDisabled
-            ? "bg-gray-400"
+            ? "bg-blue-400"
             : isSignup
             ? "bg-green-600 hover:bg-green-700"
             : "bg-blue-600 hover:bg-blue-700"
@@ -150,7 +150,7 @@ export default function AuthForm() {
           : "Se connecter"}
       </button>
 
-      <div className="text-sm mt-4 text-center text-blue-300">
+      <div className="text-sm mt-4 text-center text-black">
         {isSignup ? (
           <>
             Déjà un compte ?{" "}
