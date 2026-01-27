@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    console.log("TEST DB: process.env.DATABASE_URL =", process.env.DATABASE_URL);
     const users = await prisma.user.findMany();
     return NextResponse.json({ users });
   } catch (err) {
