@@ -7,6 +7,7 @@ const SECRET = process.env.JWT_SECRET || "SUPER_SECRET";
 
 export async function POST(req: NextRequest) {
   try {
+     console.log("DATABASE_URL =", process.env.DATABASE_URL);
     console.log("SIGNUP: DATABASE_URL =", process.env.DATABASE_URL);
     console.log("SIGNUP: body reçu");
     const { username, password } = await req.json();
