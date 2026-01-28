@@ -36,7 +36,7 @@ export default function ConnectedHeader() {
     <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-md flex justify-between items-center">
       <h1
         className="text-2xl font-bold cursor-pointer"
-        onClick={() => router.push("/dashboard")}
+        onClick={() => router.push("/connectedPage")}
       >
         MonSite
       </h1>

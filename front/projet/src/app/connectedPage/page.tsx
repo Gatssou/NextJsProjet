@@ -10,23 +10,20 @@ axios.defaults.withCredentials = true;
 export default function ConnectedPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true); // état de chargement pour vérifier le token
-
+ const [user,setUser] = useState<{ username: string } | null>(null);
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        // ✅ Utilise la route Next.js API, pas localhost:5000
-        const res = await axios.get("/api/auth/verify");
+        // ⚠️ Utilisation chemin relatif pour prod et local
+     const res = await axios.get("/api/auth/verify", { withCredentials: true });
 
         if (!res.data.authenticated) {
-          // ❌ Non connecté → redirection vers /
           router.replace("/");
         } else {
-          // ✅ Connecté → on affiche la page
+          setUser(res.data.user);
           setLoading(false);
         }
       } catch (err) {
-        console.error("Erreur verify:", err);
-        // ❌ Erreur / pas de token → redirection vers /
         router.replace("/");
       }
     };
@@ -48,9 +45,10 @@ export default function ConnectedPage() {
 
       <main className="flex-1 p-6 bg-gray-100">
         <h2 className="text-2xl font-bold mb-4 text-black">
-          Bienvenue sur MonSite connecté
+          Bienvenue sur MonSite connecté 
         </h2>
-        <p>Placeholders pour fanart, posts et futurs jeux tour par tour.</p>
+         <span className="font-semibold text-black height 50px">{user?.username}</span> 
+        <p className="text-black">Placeholders pour fanart, posts et futurs jeux tour par tour.</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
           <div className="bg-white p-4 rounded shadow">Fanart placeholder</div>

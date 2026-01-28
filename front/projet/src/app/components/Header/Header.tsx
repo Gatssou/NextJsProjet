@@ -4,13 +4,19 @@ import AuthForm from "../AuthForm";
 import MobileOverlay from "../MobileOverlay/MobileOverlay";
 import Sidebar from "../Sidebar/Sidebar";
 
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+
   useEffect(() => {
+    
+
+    
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
+    
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -24,7 +30,10 @@ export default function Header() {
         {/* Header en top */}
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
           <a href="#">
-              <h1 className="text-2xl font-bold text-red-600">MonSite</h1>
+              <h1 className="text-2xl font-bold text-red-600">
+                 Bienvenue !
+              </h1>
+               
           </a>
 
           {/* AuthForm Desktop */}
