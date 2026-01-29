@@ -20,8 +20,7 @@ export async function POST(request: NextRequest) {
       where: { email: email.toLowerCase() }
     });
 
-    // SÉCURITÉ : Ne jamais révéler si l'email existe ou non
-    // Toujours renvoyer le même message
+    // Ne jamais révéler si l'email existe ou non
     if (!user) {
       return NextResponse.json({
         message: 'Si cet email existe, un lien de réinitialisation a été envoyé.'
@@ -31,8 +30,12 @@ export async function POST(request: NextRequest) {
     // Génère le token
     const token = await generateResetToken(user.id);
 
-    // Envoie l'email
-    await sendPasswordResetEmail(user.email, token);
+    // ✅ Correction TypeScript : email peut être null selon Prisma
+    if (user.email) {
+      await sendPasswordResetEmail(user.email, token);
+    } else {
+      console.error('Impossible d’envoyer l’email : email manquant pour l’utilisateur', user);
+    }
 
     return NextResponse.json({
       message: 'Si cet email existe, un lien de réinitialisation a été envoyé.'
