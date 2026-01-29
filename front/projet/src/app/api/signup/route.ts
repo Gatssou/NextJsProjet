@@ -7,48 +7,59 @@ const SECRET = process.env.JWT_SECRET || "SUPER_SECRET";
 
 export async function POST(req: NextRequest) {
   try {
-     console.log("DATABASE_URL =", process.env.DATABASE_URL);
-    console.log("SIGNUP: DATABASE_URL =", process.env.DATABASE_URL);
     console.log("SIGNUP: body reçu");
-    const { username, password } = await req.json();
-    console.log("SIGNUP: username=", username);
+    const { username, password, email } = await req.json(); // ✅ Ajout email
+    console.log("SIGNUP: username=", username, "email=", email);
 
-    if (!username || !password) {
+    // Vérification champs obligatoires
+    if (!username || !password || !email) {
       console.log("SIGNUP: champs manquants");
       return NextResponse.json(
-        { error: "Tous les champs sont requis" },
+        { error: "Tous les champs sont requis (username, password, email)" },
         { status: 400 }
       );
     }
 
-    const existingUser = await prisma.user.findUnique({
-      where: { username },
+    // Vérifier si username ou email existe déjà
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ username }, { email }],
+      },
     });
 
     if (existingUser) {
       console.log("SIGNUP: utilisateur existe déjà");
       return NextResponse.json(
-        { error: "Ce nom d'utilisateur existe déjà" },
+        { error: "Ce nom d'utilisateur ou cet email existe déjà" },
         { status: 400 }
       );
     }
 
+    // Hash du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log("SIGNUP: mot de passe hashé");
 
+    // Création user en base
     const user = await prisma.user.create({
-      data: { username, password: hashedPassword },
+      data: { username, password: hashedPassword, email },
     });
 
+    // Génération JWT
     const token = jwt.sign({ id: user.id, username: user.username }, SECRET, {
       expiresIn: "7d",
     });
 
     console.log("SIGNUP: utilisateur créé", user);
 
-    return NextResponse.json({ user: { id: user.id, username: user.username }, token });
+    return NextResponse.json({
+      user: { id: user.id, username: user.username, email: user.email },
+      token,
+    });
   } catch (err: any) {
     console.error("SIGNUP ERROR:", err);
-    return NextResponse.json({ error: "Erreur lors de l'inscription" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Erreur lors de l'inscription" },
+      { status: 500 }
+    );
   }
 }
