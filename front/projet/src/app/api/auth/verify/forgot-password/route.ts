@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     // Génère le token
     const token = await generateResetToken(user.id);
 
-    // ✅ Correction TypeScript : email peut être null selon Prisma
+  
     if (user.email) {
       await sendPasswordResetEmail(user.email, token);
     } else {
