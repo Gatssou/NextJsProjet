@@ -9,6 +9,7 @@ axios.defaults.withCredentials = true;
 export default function AuthForm() {
   const [isSignup, setIsSignup] = useState(false);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // ✅ Ajout email
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
   const [passwordFeedback, setPasswordFeedback] = useState("");
@@ -16,12 +17,13 @@ export default function AuthForm() {
 
   const router = useRouter();
 
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const passwordRegex =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
 
-    if (!isSignup) return; // ⬅️ IMPORTANT : feedback seulement en signup
+    if (!isSignup) return;
 
     if (!value) {
       setPasswordFeedback("");
@@ -31,7 +33,7 @@ export default function AuthForm() {
     setPasswordFeedback(
       passwordRegex.test(value)
         ? "Mot de passe correct ✔"
-        : "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre"
+        : "Mot de passe trop faible : min 8 caractères, 1 majuscule, 1 chiffre, 1 caractère spécial"
     );
   };
 
@@ -39,7 +41,8 @@ export default function AuthForm() {
     setFeedback("");
     setLoading(true);
 
-    if (!username || !password) {
+    // ✅ Vérification que tous les champs sont remplis
+    if (!username.trim() || !password || !email.trim()) {
       setFeedback("Veuillez remplir tous les champs !");
       setLoading(false);
       return;
@@ -55,11 +58,13 @@ export default function AuthForm() {
       const res = await axios.post("/api/signup", {
         username: username.trim(),
         password,
+        email: email.trim(), // ✅ Envoi de l'email
       });
 
       alert(res.data.message || "Utilisateur créé !");
       setIsSignup(false);
       setUsername("");
+      setEmail(""); // ✅ reset email
       setPassword("");
       setPasswordFeedback("");
     } catch (err: any) {
@@ -85,7 +90,6 @@ export default function AuthForm() {
         password,
       });
 
-      // ✅ Le cookie JWT est posé ici
       router.replace("/transitionPage");
     } catch (err: any) {
       setFeedback(err.response?.data?.error || "Identifiants invalides");
@@ -95,7 +99,10 @@ export default function AuthForm() {
   };
 
   const isButtonDisabled =
-    loading || !username || !password || (isSignup && !passwordRegex.test(password));
+    loading ||
+    !username ||
+    !password ||
+    (isSignup && (!passwordRegex.test(password) || !email.trim()));
 
   return (
     <div className="bg-white shadow-lg p-6 rounded-lg w-80 max-w-full animate-fade">
@@ -105,10 +112,20 @@ export default function AuthForm() {
 
       <input
         className="w-full p-2 mb-3 border border-gray-400 rounded text-black"
-        placeholder="Nom d'utilisateur"
+        placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
+
+      {isSignup && (
+        <input
+          type="email"
+          className="w-full p-2 mb-3 border border-gray-400 rounded text-black"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      )}
 
       <input
         type="password"
@@ -150,6 +167,18 @@ export default function AuthForm() {
           : "Se connecter"}
       </button>
 
+      {/* ⬇️ Lien mot de passe oublié */}
+      {!isSignup && (
+        <div className="text-center mt-3">
+          <a
+            href="/forgot-password"
+            className="text-sm text-blue-600 hover:underline"
+          >
+            Mot de passe oublié ?
+          </a>
+        </div>
+      )}
+
       <div className="text-sm mt-4 text-center text-black">
         {isSignup ? (
           <>
@@ -160,9 +189,10 @@ export default function AuthForm() {
                 setFeedback("");
                 setPasswordFeedback("");
                 setUsername("");
+                setEmail(""); // ✅ reset email
                 setPassword("");
               }}
-              className="text-blue-600 hover:underline "
+              className="text-blue-600 hover:underline"
             >
               Connectez-vous
             </button>
@@ -176,6 +206,7 @@ export default function AuthForm() {
                 setFeedback("");
                 setPasswordFeedback("");
                 setUsername("");
+                setEmail(""); // ✅ reset email
                 setPassword("");
               }}
               className="text-blue-600 hover:underline"
