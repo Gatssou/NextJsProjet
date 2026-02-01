@@ -85,14 +85,20 @@ export default function ConnectedPage() {
             
             {/* Username display */}
             <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg blur opacity-50"></div>
-                <div className="relative px-6 py-3 bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-lg">
-                  <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text">
-                    {user?.username}
-                  </span>
-                </div>
+              <div className="flex items-center gap-3 flex-wrap">
+            <p className="text-lg text-slate-300">
+              Bienvenue
+            </p>
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg blur opacity-50"></div>
+              <div className="relative px-4 py-2 bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-lg">
+                <span className="text-xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text">
+                  {user?.username}
+                </span>
               </div>
+            </div>
+            <span className="text-lg text-slate-300"></span>
+          </div>
               <div className="px-3 py-1 bg-purple-500/20 border border-purple-400/30 rounded-full">
                 <span className="text-xs font-bold text-purple-300">PRO</span>
               </div>
