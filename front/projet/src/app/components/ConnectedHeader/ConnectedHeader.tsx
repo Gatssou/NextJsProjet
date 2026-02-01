@@ -33,7 +33,7 @@ export default function ConnectedHeader() {
   };
 
   return (
-    <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-md flex justify-between items-center">
+    <header className="z-40 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-md flex justify-between items-center">
       <h1
         className="text-2xl font-bold cursor-pointer"
         onClick={() => router.push("/connectedPage")}
