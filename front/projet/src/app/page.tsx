@@ -1,5 +1,6 @@
 "use client";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim in beatae earum reiciendis dignissimos ipsa, accusantium a at facilis repellat nulla consequatur deleniti cumque dicta non ducimus repellendus. Id, voluptatem?
         </p>
       </section>
+        <Footer />
     </main>
   );
 }
