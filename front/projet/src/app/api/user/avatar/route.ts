@@ -6,7 +6,7 @@ import { uploadAvatar, validateImageFile, deleteAvatar } from '@/lib/avatar';
 const JWT_SECRET = process.env.JWT_SECRET || 'votre-secret-jwt';
 
 interface JWTPayload {
-  userId: number;
+  id: number;
   username: string;
 }
 
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     // 4. Récupérer l'utilisateur
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: decoded.id },
       select: { id: true, avatarUrl: true }
     });
 
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 6. Upload du nouveau fichier
-    const uploadResult = await uploadAvatar(decoded.userId, file);
+    const uploadResult = await uploadAvatar(decoded.id, file);
 
     if (!uploadResult.success) {
       return NextResponse.json(
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     // 7. Mettre à jour la base de données
     const updatedUser = await prisma.user.update({
-      where: { id: decoded.userId },
+      where: { id: decoded.id },
       data: { avatarUrl: uploadResult.url },
       select: {
         id: true,
@@ -133,7 +133,7 @@ export async function DELETE(request: NextRequest) {
 
     // 2. Récupérer l'utilisateur
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: decoded.id },
       select: { id: true, avatarUrl: true }
     });
 
@@ -151,7 +151,7 @@ export async function DELETE(request: NextRequest) {
 
     // 4. Mettre à jour la base de données
     const updatedUser = await prisma.user.update({
-      where: { id: decoded.userId },
+      where: { id: decoded.id },
       data: { avatarUrl: null },
       select: {
         id: true,
