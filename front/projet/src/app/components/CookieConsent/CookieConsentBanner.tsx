@@ -45,13 +45,21 @@ export default function CookieConsentBanner() {
         <div className="flex gap-2">
           <button
             onClick={refuseAll}
-            className="px-4 py-2 bg-gray-700 rounded"
+            className=" px-4 py-2 rounded
+      cursor-pointer
+      bg-gray-200
+      hover:bg-gray-300
+      transition"
           >
             Refuser
           </button>
           <button
             onClick={acceptAll}
-            className="px-4 py-2 bg-blue-600 rounded"
+            className=" px-4 py-2 rounded
+      cursor-pointer
+      bg-gray-200
+      hover:bg-gray-300
+      transition"
           >
             Accepter
           </button>
