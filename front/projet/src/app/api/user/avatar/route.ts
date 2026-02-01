@@ -12,8 +12,8 @@ interface JWTPayload {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Vérifier l'authentification
-    const token = request.cookies.get('auth-token')?.value;
+    // 1. Vérifier l'authentificationa
+    const token = request.cookies.get('token')?.value;
 
     if (!token) {
       return NextResponse.json(
