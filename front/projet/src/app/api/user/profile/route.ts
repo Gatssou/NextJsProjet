@@ -12,7 +12,7 @@ interface JWTPayload {
 export async function GET(request: NextRequest) {
   try {
     // Vérifier l'authentification
-    const token = request.cookies.get('auth-token')?.value;
+    const token = request.cookies.get('token')?.value;
 
     if (!token) {
       return NextResponse.json(
