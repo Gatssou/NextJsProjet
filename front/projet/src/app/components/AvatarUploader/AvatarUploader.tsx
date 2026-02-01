@@ -26,17 +26,10 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
       const response = await fetch('/api/user/avatar', {
         method: 'POST',
         body: formData,
-        credentials: 'include', // <-- important
+        credentials: 'include', // ✅ essentiel pour envoyer le cookie JWT
       });
 
-      // On vérifie si c'est bien du JSON
-      const text = await response.text();
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (err) {
-        throw new Error('Réponse serveur invalide : ' + text);
-      }
+      const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || 'Erreur lors de l\'upload');
@@ -45,11 +38,9 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
       setSuccess('Avatar mis à jour avec succès !');
       onAvatarUpdate(data.user.avatarUrl);
 
-      // Masquer le message de succès après 3 secondes
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Erreur lors de l\'upload';
-      setError(errorMessage);
+      setError(err instanceof Error ? err.message : 'Erreur lors de l\'upload');
     } finally {
       setLoading(false);
     }
@@ -65,16 +56,10 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
     try {
       const response = await fetch('/api/user/avatar', {
         method: 'DELETE',
-        credentials: 'include', // <-- important
+        credentials: 'include', // ✅ essentiel
       });
 
-      const text = await response.text();
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (err) {
-        throw new Error('Réponse serveur invalide : ' + text);
-      }
+      const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || 'Erreur lors de la suppression');
@@ -85,8 +70,7 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
 
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Erreur lors de la suppression';
-      setError(errorMessage);
+      setError(err instanceof Error ? err.message : 'Erreur lors de la suppression');
     } finally {
       setLoading(false);
     }
@@ -94,7 +78,6 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
 
   return (
     <div className="flex flex-col items-center gap-4">
-      {/* Avatar */}
       <Avatar
         src={user.avatarUrl}
         alt={user.username}
@@ -104,13 +87,11 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
         loading={loading}
       />
 
-      {/* Instructions */}
       <div className="text-center">
         <p className="text-sm text-gray-600 mb-2">Cliquez sur l'avatar pour changer la photo</p>
         <p className="text-xs text-gray-500">JPG, PNG, WebP ou GIF. Max 5MB.</p>
       </div>
 
-      {/* Bouton supprimer */}
       {user.avatarUrl && (
         <button
           onClick={handleDelete}
@@ -121,7 +102,6 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
         </button>
       )}
 
-      {/* Messages */}
       {error && (
         <div className="w-full max-w-md p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
           {error}
