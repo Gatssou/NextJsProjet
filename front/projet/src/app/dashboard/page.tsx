@@ -179,9 +179,11 @@ export default function DashboardPage() {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold text-cyan-400 mb-2">
-                    Informations
-                  </h3>
+                  <a href="/dashboard/profile">
+                    <h3 className="text-lg font-bold text-cyan-400 mb-2">
+                      Informations
+                    </h3>
+                  </a>
                   <p className="text-sm text-slate-400 leading-relaxed">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia nisi qui, eos nobis id quasi minus assumenda consectetur eum expedita laboriosam ipsum, vitae accusamus voluptatem labore modi eius necessitatibus illo?
                   </p>

@@ -100,7 +100,7 @@ export default function ConnectedPage() {
             <span className="text-lg text-slate-300"></span>
           </div>
               <div className="px-3 py-1 bg-purple-500/20 border border-purple-400/30 rounded-full">
-                <span className="text-xs font-bold text-purple-300">PRO</span>
+                <a href="/profile"><span className="text-xs font-bold text-purple-300">PRO</span></a>
               </div>
             </div>
 
