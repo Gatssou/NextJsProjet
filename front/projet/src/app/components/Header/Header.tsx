@@ -214,34 +214,74 @@ export default function Header() {
     </div>
 
     {/* Right Side - Image Grid */}
-    <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-      {[
-        { src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-feature-03-detail-01.jpg", alt: "Walnut card tray with white powder coated steel divider and 3 punchout holes." },
-        { src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-feature-03-detail-02.jpg", alt: "Top down view of walnut card tray with embedded magnets and card groove." },
-        { src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-feature-03-detail-03.jpg", alt: "Side of walnut card tray with card groove and recessed card area." },
-        { src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-feature-03-detail-04.jpg", alt: "Walnut card tray filled with cards and card angled in dedicated groove." }
-      ].map((image, index) => (
-        <div 
-          key={index}
-          className="group relative overflow-hidden rounded-2xl"
-        >
-          {/* Glow border effect */}
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur transition-opacity duration-300"></div>
-          
-          {/* Image container */}
-          <div className="relative overflow-hidden rounded-2xl bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 group-hover:border-cyan-500/50 transition-all duration-300">
-            <img 
-              src={image.src} 
-              alt={image.alt} 
-              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-            />
-            
-            {/* Overlay gradient on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
+  {[
+    {
+      src: "/images/homePage/1.jpg",
+      alt: "Sasuke Uchiha Illustration_ The Embraced Darkness of a Legendary Shinobi",
+      title: "Sasuke Uchiha Illustration: The Embraced Darkness of a Legendary Shinobi",
+      author: "𝓑𝓵𝓾𝓮𝓼𝓑𝓵𝓾𝓮",
+      link: "https://fr.pinterest.com/pin/593560425916085827/"
+    },
+    {
+      src: "/images/homePage/2.jpg",
+      alt: "Naruto",
+      title: "Epic Anime Adventures Await You!",
+      author: "Aniime Mania",
+      link: "https://fr.pinterest.com/pin/25121710418162910/"
+    },
+    {
+      src: "/images/homePage/3.jpg",
+      alt: "Orochimaru",
+      title: "Ninja légendaire",
+      author: "Ghost God",
+      link: "https://fr.pinterest.com/pin/1118792732461330029/"
+    },
+    {
+      src: "/images/homePage/4.jpg",
+      alt: "Tiré de l'animé",
+      title: "Kakashi",
+      author: "Marcel Sivakov",
+      link: "https://fr.pinterest.com/pin/610730399509190772/"
+    }
+  ].map((image, index) => (
+    <a
+      key={index}
+      href={image.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative overflow-hidden rounded-2xl focus:outline-none"
+    >
+      {/* Glow border */}
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-25 blur transition-opacity duration-300" />
+
+      {/* Card */}
+      <div className="relative h-full overflow-hidden rounded-2xl bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 transition-all duration-300 group-hover:border-cyan-500/40">
+        {/* Image */}
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-500"
+        />
+
+        {/* Subtle overlay (always visible) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+
+        {/* Text content */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+          <div className="translate-y-2 opacity-80 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+            <h3 className="text-sm sm:text-base font-semibold text-white leading-tight">
+              {image.title}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300">
+              by {image.author}
+            </p>
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    </a>
+  ))}
+</div>
   </div>
 
   {/* Bottom gradient accent */}
