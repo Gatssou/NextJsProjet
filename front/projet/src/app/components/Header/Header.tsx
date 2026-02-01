@@ -24,14 +24,14 @@ export default function Header() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar à gauche */}
-      <Sidebar isMobile={isMobile} />
+   
 
       <div className="flex-1 flex flex-col">
         {/* Header en top */}
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
           <a href="#">
               <h1 className="text-2xl font-bold text-red-600">
-                 Bienvenue !
+                JForPlay
               </h1>
                
           </a>
