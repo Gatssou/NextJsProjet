@@ -70,7 +70,7 @@ export default function ConnectedHeader() {
         </button>
 
         {menuOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg flex flex-col">
+          <div className="absolute right-0 mt-4 w-48 bg-white text-black rounded shadow-lg flex flex-col">
             {navLinks.map((link) => (
               <a
                 key={link.href}
