@@ -6,9 +6,9 @@ export default function Home() {
     <main className="min-h-screen bg-gray-100 text-black-500" >
       <Header />
       <section className="p-10 text-center">
-        <h2 className="text-xl md:text-2xl font-bold text-black">Bienvenue sur MonSite</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-black">section </h2>
         <p className="mt-4 text-black">
-          Connectez-vous ou inscrivez-vous pour accéder à votre dashboard.
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim in beatae earum reiciendis dignissimos ipsa, accusantium a at facilis repellat nulla consequatur deleniti cumque dicta non ducimus repellendus. Id, voluptatem?
         </p>
       </section>
     </main>
