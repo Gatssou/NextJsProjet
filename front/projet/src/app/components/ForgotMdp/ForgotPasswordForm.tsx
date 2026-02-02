@@ -28,7 +28,7 @@ export default function ForgotPasswordForm() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Mot de passe oublié</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-black">Mot de passe oublié</h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
