@@ -103,7 +103,7 @@ export default function DashboardPage() {
           </div>
 
           <p className="text-slate-400 max-w-3xl leading-relaxed">
-            Ici tu pourras gérer ton compte, voir tes posts, fanarts et futurs jeux tour par tour. 
+            Ici tu pourras changer ta photo de <a href="/dashboard/profile"><button className="text-white font-weight 800 cursor-pointer"><strong>Profil</strong></button></a> , gérer ton compte, voir tes posts, fanarts et futurs jeux tour par tour. 
             Explore tes statistiques, gère ton contenu et reste connecté avec la communauté.
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex-1">
                   <a href="/dashboard/profile">
-                    <h3 className="text-lg font-bold text-cyan-400 mb-2">
+                    <h3 className="text-lg font-bold text-cyan-400 mb-2 cursor-pointer">
                       Informations
                     </h3>
                   </a>
