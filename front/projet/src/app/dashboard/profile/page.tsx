@@ -37,9 +37,14 @@ export default function ProfilePage() {
     fetchUserProfile();
   }, [router]);
 
-  const handleAvatarUpdate = (newAvatarUrl: string | null) => {
-    if (user) setUser({ ...user, avatarUrl: newAvatarUrl });
-  };
+ const handleAvatarUpdate = (newAvatarUrl: string | null) => {
+  if (!user) return;
+
+  setUser({
+    ...user,
+    avatarUrl: newAvatarUrl ?? user.avatarUrl,
+  });
+};
 
   if (loading) {
     return (
