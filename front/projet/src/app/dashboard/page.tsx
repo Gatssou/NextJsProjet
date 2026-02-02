@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
-import { UserAvatarData } from '@/types/UserAvatar';
+import UserAvatar from "../components/UserAvatar/UserAvatar";
+import { UserAvatarData } from "@/types/UserAvatar";
 
 axios.defaults.withCredentials = true;
 
 export default function DashboardPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  const [user, setUser] = useState<UserAvatarData | null>(null);
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -21,7 +22,9 @@ export default function DashboardPage() {
         if (!res.data.authenticated) {
           router.replace("/");
         } else {
-          setUser(res.data.user);
+          // On ne prend que ce dont on a besoin pour le dashboard
+          const { username, avatarUrl } = res.data.user;
+          setUser({ username, avatarUrl });
           setLoading(false);
         }
       } catch (err) {
@@ -32,19 +35,13 @@ export default function DashboardPage() {
     verifyAuth();
   }, [router]);
 
-  // Loading state
   if (loading) {
     return (
       <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 overflow-hidden">
-        {/* Animated Background */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 animate-pulse blur-3xl"></div>
         </div>
-
-        {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
-        {/* Loader */}
         <div className="relative z-10 flex flex-col items-center">
           <div className="relative w-20 h-20 mb-6">
             <div className="absolute inset-0 border-4 border-transparent border-t-cyan-500 border-r-purple-500 rounded-full animate-spin"></div>
@@ -68,7 +65,6 @@ export default function DashboardPage() {
       <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
 
       <main className="relative flex-1 p-6 lg:p-8 max-w-7xl mx-auto w-full">
-        
         {/* Header Section */}
         <div className="mb-12 space-y-6">
           {/* Dashboard Badge */}
@@ -89,9 +85,7 @@ export default function DashboardPage() {
 
           {/* Welcome message */}
           <div className="flex items-center gap-3 flex-wrap">
-            <p className="text-lg text-slate-300">
-             Dashboard
-            </p>
+            {user && <UserAvatar user={user} size={48} />}
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg blur opacity-50"></div>
               <div className="relative px-4 py-2 bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-lg">
@@ -100,25 +94,20 @@ export default function DashboardPage() {
                 </span>
               </div>
             </div>
-            <span className="text-lg text-slate-300"></span>
           </div>
 
           <p className="text-slate-400 max-w-3xl leading-relaxed">
-            Ici tu pourras changer ta photo de <a href="/dashboard/profile"><button className="text-white font-weight 800 cursor-pointer"><strong>Profil</strong></button></a> , gérer ton compte, voir tes posts, fanarts et futurs jeux tour par tour. 
-            Explore tes statistiques, gère ton contenu et reste connecté avec la communauté.
+            Ici tu pourras changer ta photo de <a href="/dashboard/profile"><button className="text-white font-weight 800 cursor-pointer"><strong>Profil</strong></button></a>, gérer ton compte, voir tes posts, fanarts et futurs jeux tour par tour. Explore tes statistiques, gère ton contenu et reste connecté avec la communauté.
           </p>
         </div>
 
         {/* Dashboard Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          
-          {/* Gestion Fanart Card */}
+          {/* --- Gestion Fanart Card --- */}
           <div className="group relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-rose-600 rounded-2xl opacity-0 group-hover:opacity-30 blur transition-opacity duration-300"></div>
-            
             <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 hover:border-pink-500/50 transition-all duration-300 h-full">
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
-              
               <div className="flex items-start justify-between mb-4">
                 <div className="p-3 bg-pink-500/20 border border-pink-400/30 rounded-xl">
                   <svg className="w-8 h-8 text-pink-400" fill="none" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,25 +116,21 @@ export default function DashboardPage() {
                 </div>
                 <span className="px-2 py-1 bg-pink-500/20 border border-pink-400/30 rounded-full text-xs font-bold text-pink-300">12</span>
               </div>
-
               <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text mb-2">
                 Gestion Fanart
               </h3>
               <p className="text-sm text-slate-400 mb-4">Gérez vos créations artistiques et fanarts</p>
-              
               <button className="w-full px-4 py-2 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-semibold rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 text-sm">
                 Gérer →
               </button>
             </div>
           </div>
 
-          {/* Gestion Posts Card */}
+          {/* --- Gestion Posts Card --- */}
           <div className="group relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl opacity-0 group-hover:opacity-30 blur transition-opacity duration-300"></div>
-            
             <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 h-full">
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
-              
               <div className="flex items-start justify-between mb-4">
                 <div className="p-3 bg-purple-500/20 border border-purple-400/30 rounded-xl">
                   <svg className="w-8 h-8 text-purple-400" fill="none" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,25 +139,21 @@ export default function DashboardPage() {
                 </div>
                 <span className="px-2 py-1 bg-purple-500/20 border border-purple-400/30 rounded-full text-xs font-bold text-purple-300">8</span>
               </div>
-
               <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text mb-2">
                 Gestion Posts
               </h3>
               <p className="text-sm text-slate-400 mb-4">Gérez vos publications et articles</p>
-              
               <button className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 text-sm">
                 Gérer →
               </button>
             </div>
           </div>
 
-          {/* Info Card - Full width on mobile, spans 1 col on larger screens */}
+          {/* --- Info Card --- */}
           <div className="group relative md:col-span-2 lg:col-span-1">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl opacity-20 blur"></div>
-            
             <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 h-full">
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
-              
               <div className="flex items-start gap-3 mb-4">
                 <div className="p-2 bg-cyan-500/20 border border-cyan-400/30 rounded-lg">
                   <svg className="w-6 h-6 text-cyan-400" fill="none" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,17 +174,14 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Statistics Card - Full width */}
+          {/* --- Statistics Card --- */}
           <div className="md:col-span-2 lg:col-span-3 group relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 rounded-2xl opacity-10 blur"></div>
-            
             <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8">
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
-              
               <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text mb-6">
                 Statistiques rapides
               </h3>
-              
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-black text-pink-400 mb-1">12</div>
@@ -224,7 +202,6 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-
         </div>
       </main>
     </div>
