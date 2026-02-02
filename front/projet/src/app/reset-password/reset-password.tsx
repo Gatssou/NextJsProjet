@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import ResetPasswordForm from '@/app/components/ResetPassWord/ForgotPasswordForm';
+import ResetPasswordForm from '@/app/components/ResetPassWord/ResetPasswordForm';
 
 export const metadata = {
   title: 'Réinitialiser le mot de passe',
