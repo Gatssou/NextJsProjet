@@ -6,6 +6,7 @@ import axios from "axios";
 import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
 import { User } from "@/types/user";
 import UserAvatar from "../components/UserAvatar/UserAvatar";
+import { UserAvatarData } from '@/types/UserAvatar';
 
 axios.defaults.withCredentials = true;
 
