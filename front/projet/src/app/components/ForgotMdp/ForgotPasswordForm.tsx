@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
     setError('');
 
     try {
-      const response = await axios.post('/api/auth/forgot-password', { email });
+      const response = await axios.post('/api/auth/verify/forgot-password', { email });
       setMessage(response.data.message);
       setEmail(''); // Vide le champ
     } catch (err: any) {
