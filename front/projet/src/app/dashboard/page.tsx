@@ -23,8 +23,11 @@ export default function DashboardPage() {
           router.replace("/");
         } else {
           // On ne prend que ce dont on a besoin pour le dashboard
-          const { username, avatarUrl } = res.data.user;
-          setUser({ username, avatarUrl });
+       const { username, avatarUrl } = res.data.user as {
+  username: string;
+  avatarUrl?: string | null;
+};
+setUser({ username, avatarUrl });
           setLoading(false);
         }
       } catch (err) {
