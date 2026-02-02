@@ -8,7 +8,7 @@ export async function sendPasswordResetEmail(email: string, token: string) {
 
   try {
     await resend.emails.send({
-      from: 'noreply@tondomaine.com',
+      from: 'noreply@julien4web.fr',
       to: email,
       subject: 'Réinitialisation de votre mot de passe',
       html: `
