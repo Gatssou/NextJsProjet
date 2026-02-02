@@ -113,11 +113,11 @@ export default function ResetPasswordForm() {
   // Formulaire
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Nouveau mot de passe</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-black">Nouveau mot de passe</h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="newPassword" className="block text-sm font-medium text-black mb-2">
             Nouveau mot de passe
           </label>
           <input
