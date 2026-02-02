@@ -26,16 +26,17 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
       const response = await fetch('/api/user/avatar', {
         method: 'POST',
         body: formData,
-        credentials: 'include', // ✅ essentiel pour envoyer le cookie JWT
+        credentials: 'include',
       });
 
-      const data = await response.json();
+      const data: { user: { avatarUrl: string | null }; error?: string } = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || 'Erreur lors de l\'upload');
       }
 
       setSuccess('Avatar mis à jour avec succès !');
+      // ✅ Ici TS sait que avatarUrl peut être string | null
       onAvatarUpdate(data.user.avatarUrl);
 
       setTimeout(() => setSuccess(null), 3000);
@@ -56,17 +57,17 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
     try {
       const response = await fetch('/api/user/avatar', {
         method: 'DELETE',
-        credentials: 'include', // ✅ essentiel
+        credentials: 'include',
       });
 
-      const data = await response.json();
+      const data: { user: { avatarUrl: string | null }; error?: string } = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || 'Erreur lors de la suppression');
       }
 
       setSuccess('Avatar supprimé avec succès !');
-      onAvatarUpdate(null);
+      onAvatarUpdate(null); // ✅ type correct
 
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: unknown) {
