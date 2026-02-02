@@ -20,9 +20,8 @@ export default function UserAvatar({ user, size = 48 }: UserAvatarProps) {
           className="w-full h-full object-cover"
         />
       ) : (
-        <span className="text-white font-bold">
-          {user.username.charAt(0).toUpperCase()}
-        </span>
+        // ⚡ Ici ce qu’on affiche si pas d’avatar
+        <span className="text-white font-bold">{user.username[0]}</span>
       )}
     </div>
   );

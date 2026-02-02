@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
-import UserAvatar from '../components/UserAvatar/UserAvatar';
 
 axios.defaults.withCredentials = true;
 
@@ -98,10 +97,6 @@ export default function DashboardPage() {
                 <span className="text-xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text">
                   {user?.username}
                 </span>
-                   <span className="text-xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text">
-                {user && <UserAvatar user={user} />}
-                </span>
-                
               </div>
             </div>
             <span className="text-lg text-slate-300"></span>

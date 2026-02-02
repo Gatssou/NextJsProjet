@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
-import AvatarUploader from "../components/AvatarUploader/AvatarUploader";
 import { User } from "@/types/user";
-import UserAvatar from '../components/UserAvatar/UserAvatar';
+import UserAvatar from "../components/UserAvatar/UserAvatar";
 
 axios.defaults.withCredentials = true;
 
@@ -102,12 +101,11 @@ export default function ConnectedPage() {
         {/* Avatar Uploader */}
         <div className="border-b border-gray-200 pb-8 mb-8">
           <h2 className="text-lg font-semibold text-white mb-4">Photo de profil</h2>
-        <UserAvatar user={user} />
-          {/* recuperation de la photo de profil*/}
+          <UserAvatar user={user} />
         </div>
 
         {/* Autres informations utilisateur */}
-      
+       
       </main>
     </div>
   );
