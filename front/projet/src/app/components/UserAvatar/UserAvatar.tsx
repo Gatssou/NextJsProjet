@@ -1,9 +1,8 @@
-'use client';
-
-import { User } from '@/types/user';
+// UserAvatar.tsx
+import { UserAvatarData } from '../../../types/UserAvatar';
 
 interface UserAvatarProps {
-  user: User;
+  user: UserAvatarData;
   size?: number;
 }
 
@@ -20,7 +19,6 @@ export default function UserAvatar({ user, size = 48 }: UserAvatarProps) {
           className="w-full h-full object-cover"
         />
       ) : (
-        // ⚡ Ici ce qu’on affiche si pas d’avatar
         <span className="text-white font-bold">{user.username[0]}</span>
       )}
     </div>

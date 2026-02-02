@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
+import { UserAvatarData } from '@/types/UserAvatar';
 
 axios.defaults.withCredentials = true;
 
