@@ -7,6 +7,7 @@ import ConnectedHeader from "../components/ConnectedHeader/ConnectedHeader";
 import { User } from "@/types/user";
 import UserAvatar from "../components/UserAvatar/UserAvatar";
 import { UserAvatarData } from '@/types/UserAvatar';
+import Footer from "../components/Footer/Footer";
 
 axios.defaults.withCredentials = true;
 
@@ -108,6 +109,8 @@ export default function ConnectedPage() {
         {/* Autres informations utilisateur */}
        
       </main>
+      <Footer />
     </div>
+    
   );
 }
