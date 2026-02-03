@@ -61,10 +61,9 @@ export default function Header() {
         {!isMobile && (
           <div className="space-y-2 max-w-xl">
             <p className="text-xl font-semibold text-transparent bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text">
-              La plateforme gaming 
-            </p>
+              La plateforme FanArt </p>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Rejoignez des milliers de joueurs dans une expérience immersive unique. 
+              Rejoignez des milliers de d'artistes dans une expérience immersive unique. 
               Tournois exclusifs, récompenses instantanées, communauté active 24/7.
             </p>
             
@@ -73,7 +72,7 @@ export default function Header() {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                 <span className="text-xs text-slate-400">
-                  <span className="text-emerald-400 font-bold">5K</span> Jeux
+                  <span className="text-emerald-400 font-bold">5K</span> Catégories
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -125,7 +124,7 @@ export default function Header() {
     {isMobile && (
       <div className="mt-4 pt-4 border-t border-slate-800">
         <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text">
-          Gaming nouvelle génération
+          BattleArt nouvelle génération
         </p>
         <div className="flex gap-4 mt-2">
           <span className="text-xs text-slate-400">
@@ -172,25 +171,43 @@ export default function Header() {
         </div>
         
         <h2 className="text-4xl font-black tracking-tight sm:text-5xl bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-          Technical Specifications
+          BattleArt : quand l’art devient un duel
         </h2>
         
         <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full"></div>
       </div>
 
       <p className="text-lg text-slate-300 leading-relaxed">
-        The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The powder coated steel divider separates active cards from new ones, or can be used to archive important task lists.
+      BattleArt révolutionne le monde du dessin en transformant chaque création en défi. Les artistes s’affrontent sur un thème imposé et disposent de trois jours pour produire leur meilleure œuvre. La communauté juge ensuite les talents en temps réel, désignant le vainqueur. Une compétition intense, rapide et créative où chaque trait compte et où la passion se mesure à coups de pinceaux et d’idées un systéme de ladder sera mis en place pour les premières places du site et de tous les artistes.
       </p>
 
       {/* Specifications Grid */}
       <dl className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
         {[
-          { label: 'Origin', value: 'Designed by Good Goods, Inc.' },
-          { label: 'Material', value: 'Solid walnut base with rare earth magnets and powder coated steel card cover' },
-          { label: 'Dimensions', value: '6.25" x 3.55" x 1.15"' },
-          { label: 'Finish', value: 'Hand sanded and finished with natural oil' },
-          { label: 'Includes', value: 'Wood card tray and 3 refill packs' },
-          { label: 'Considerations', value: 'Made from natural materials. Grain and color vary with each item.' }
+          {
+    label: "Comment participer",
+    value: "Choisis un thème et clique ici pour t’inscrire à la prochaine BattleArt."
+  },
+  {
+    label: "Matériel",
+    value: "Utilise le matériel de ton choix : papier, tablette graphique, logiciels ou peinture."
+  },
+  {
+    label: "Formats",
+    value: "Respecte les formats imposés pour chaque Battle afin que ton dessin soit valide."
+  },
+  {
+    label: "Résultats et récompenses",
+    value: "Les œuvres sont jugées par la communauté. Gagne des points et monte au classement."
+  },
+  {
+    label: "Fair play",
+    value: "Respecte les règles et les autres participants pour un duel artistique sain."
+  },
+  {
+    label: "Challenge et considération",
+    value: "Chaque Battle est un défi pour tester ton talent et te mesurer aux autres artistes."
+  }
         ].map((spec, index) => (
           <div 
             key={spec.label}
