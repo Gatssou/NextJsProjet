@@ -10,6 +10,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ui-avatars.com', // pour les avatars par défaut
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      },
     ],
   },
   experimental: {
