@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import ConnectedHeader from '../../components/ConnectedHeader/ConnectedHeader';
 import AvatarUploader from '../../components/AvatarUploader/AvatarUploader';
+import Footer from "../../components/Footer/Footer";
 import { User } from '@/types/user';
 
 axios.defaults.withCredentials = true;
@@ -141,6 +142,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+        <Footer />
     </div>
   );
 }
