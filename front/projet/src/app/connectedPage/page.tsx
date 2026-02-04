@@ -233,6 +233,8 @@ export default function ConnectedPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
+    
   );
 }
