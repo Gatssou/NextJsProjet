@@ -9,6 +9,7 @@ import UserAvatar from "../components/UserAvatar/UserAvatar";
 import BattleArena from "../components/BattleArena/BattleArena";
 import { Battle } from "@/types/battle";
 import { mockBattles } from "@/lib/mockBattles";
+import Footer from "../components/Footer/Footer";
 
 axios.defaults.withCredentials = true;
 
@@ -233,6 +234,7 @@ export default function ConnectedPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
