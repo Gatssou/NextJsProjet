@@ -42,7 +42,7 @@ export default function CookieConsentBanner() {
           Vous pouvez accepter ou refuser les cookies optionnels.
         </p>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 text-black">
           <button
             onClick={refuseAll}
             className=" px-4 py-2 rounded
@@ -59,7 +59,7 @@ export default function CookieConsentBanner() {
       cursor-pointer
       bg-gray-200
       hover:bg-gray-300
-      transition"
+      transition  text-black"
           >
             Accepter
           </button>
