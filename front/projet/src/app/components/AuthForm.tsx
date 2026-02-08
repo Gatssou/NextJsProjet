@@ -105,117 +105,126 @@ export default function AuthForm() {
     (isSignup && (!passwordRegex.test(password) || !email.trim()));
 
   return (
-    <div className="bg-white shadow-lg p-6 rounded-lg w-80 max-w-full animate-fade">
-      <h2 className="text-xl font-bold mb-4 text-center text-blue-500">
-        {isSignup ? "Signup" : "Login"}
-      </h2>
+    <div className="flex justify-center">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (loading) return;
+          isSignup ? signup() : login();
+        }}
+        className="bg-white shadow-lg p-6 rounded-lg w-80 max-w-full animate-fade"
+      >
+        {/* Le formulaire complet ici */}
+        <h2 className="text-xl font-bold mb-4 text-center text-blue-500">
+          {isSignup ? "Signup" : "Login"}
+        </h2>
 
-      <input
-        className="w-full p-2 mb-3 border border-gray-400 rounded text-black"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-
-      {isSignup && (
         <input
-          type="email"
           className="w-full p-2 mb-3 border border-gray-400 rounded text-black"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
-      )}
 
-      <input
-        type="password"
-        className="w-full p-2 mb-2 border border-gray-400 rounded text-black"
-        placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => handlePasswordChange(e.target.value)}
-      />
+        {isSignup && (
+          <input
+            type="email"
+            className="w-full p-2 mb-3 border border-gray-400 rounded text-black"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        )}
 
-      {isSignup && passwordFeedback && (
-        <div
-          className={`text-sm mb-2 ${
-            passwordFeedback.includes("correct")
-              ? "text-green-600"
-              : "text-red-600"
+        <input
+          type="password"
+          className="w-full p-2 mb-2 border border-gray-400 rounded text-black"
+          placeholder="Mot de passe"
+          value={password}
+          onChange={(e) => handlePasswordChange(e.target.value)}
+        />
+
+        {isSignup && passwordFeedback && (
+          <div
+            className={`text-sm mb-2 ${
+              passwordFeedback.includes("correct") ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {passwordFeedback}
+          </div>
+        )}
+
+        {feedback && <div className="text-sm mb-2 text-red-600">{feedback}</div>}
+
+        <button
+          type="submit"
+          disabled={isButtonDisabled}
+          className={`w-full p-2 mt-2 rounded text-white ${
+            isButtonDisabled
+              ? "bg-blue-400"
+              : isSignup
+              ? "bg-green-600 hover:bg-green-700"
+              : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
-          {passwordFeedback}
-        </div>
-      )}
-
-      {feedback && <div className="text-sm mb-2 text-red-600">{feedback}</div>}
-
-      <button
-        onClick={isSignup ? signup : login}
-        disabled={isButtonDisabled}
-        className={`w-full p-2 mt-2 rounded text-white ${
-          isButtonDisabled
-            ? "bg-blue-400"
+          {loading
+            ? "Chargement..."
             : isSignup
-            ? "bg-green-600 hover:bg-green-700"
-            : "bg-blue-600 hover:bg-blue-700"
-        }`}
-      >
-        {loading
-          ? "Chargement..."
-          : isSignup
-          ? "Créer un compte"
-          : "Se connecter"}
-      </button>
+            ? "Créer un compte"
+            : "Se connecter"}
+        </button>
 
-      {/* ⬇️ Lien mot de passe oublié */}
-      {!isSignup && (
-        <div className="text-center mt-3">
-          <a
-            href="/forgot-password"
-            className="text-sm text-blue-600 hover:underline"
-          >
-            Mot de passe oublié ?
-          </a>
-        </div>
-      )}
-
-      <div className="text-sm mt-4 text-center text-black">
-        {isSignup ? (
-          <>
-            Déjà un compte ?{" "}
-            <button
-              onClick={() => {
-                setIsSignup(false);
-                setFeedback("");
-                setPasswordFeedback("");
-                setUsername("");
-                setEmail(""); // ✅ reset email
-                setPassword("");
-              }}
-              className="text-blue-600 hover:underline"
+        {!isSignup && (
+          <div className="text-center mt-3">
+            <a
+              href="/forgot-password"
+              className="text-sm text-blue-600 hover:underline"
             >
-              Connectez-vous
-            </button>
-          </>
-        ) : (
-          <>
-            Pas de compte ?{" "}
-            <button
-              onClick={() => {
-                setIsSignup(true);
-                setFeedback("");
-                setPasswordFeedback("");
-                setUsername("");
-                setEmail(""); // ✅ reset email
-                setPassword("");
-              }}
-              className="text-blue-600 hover:underline"
-            >
-              Inscrivez-vous
-            </button>
-          </>
+              Mot de passe oublié ?
+            </a>
+          </div>
         )}
-      </div>
+
+        <div className="text-sm mt-4 text-center text-black">
+          {isSignup ? (
+            <>
+              Déjà un compte ?{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignup(false);
+                  setFeedback("");
+                  setPasswordFeedback("");
+                  setUsername("");
+                  setEmail("");
+                  setPassword("");
+                }}
+                className="text-blue-600 hover:underline"
+              >
+                Connectez-vous
+              </button>
+            </>
+          ) : (
+            <>
+              Pas de compte ?{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignup(true);
+                  setFeedback("");
+                  setPasswordFeedback("");
+                  setUsername("");
+                  setEmail("");
+                  setPassword("");
+                }}
+                className="text-blue-600 hover:underline"
+              >
+                Inscrivez-vous
+              </button>
+            </>
+          )}
+        </div>
+      </form>
     </div>
   );
 }
