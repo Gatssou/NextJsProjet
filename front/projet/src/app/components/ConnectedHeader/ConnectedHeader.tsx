@@ -14,7 +14,7 @@ type NavLink = {
 const navLinks: NavLink[] = [
   { label: "Dashboard", href: "/dashboard" },
   {
-    label: "Fanart",
+    label: "Streaming",
     href: "https://animedessins.vercel.app/",
     target: "_blank",
     rel: "noopener noreferrer",
