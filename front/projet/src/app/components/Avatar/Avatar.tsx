@@ -52,21 +52,21 @@ export default function Avatar({
         src={avatarSrc}
         alt={alt}
         fill
-        className="object-cover"
+        className="object-cover "
         onError={() => setImageError(true)}
         unoptimized={avatarSrc.includes('ui-avatars.com')}
       />
 
       {/* Loading overlay */}
       {loading && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
           <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
         </div>
       )}
 
       {/* Edit overlay */}
       {editable && !loading && isHovered && (
-        <label className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer">
+        <label className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer ">
           <svg
             className="w-6 h-6 text-white"
             fill="none"

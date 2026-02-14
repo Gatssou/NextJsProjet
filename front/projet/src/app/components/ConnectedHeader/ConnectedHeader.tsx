@@ -65,9 +65,10 @@ export default function ConnectedHeader() {
   };
 
   return (
-    <header className="z-40 bg-slate-900/70 backdrop-blur-xl text-white p-4 shadow-lg flex justify-between items-center border-b border-slate-700/50">
+   <header className="relative z-[9999] bg-slate-900/70 backdrop-blur-xl text-white p-4 shadow-lg flex justify-between items-center border-b border-slate-700/50">
+
       {/* Logo */}
-      <h1
+      <h1 
         className="text-2xl font-extrabold cursor-pointer bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
         onClick={() => router.push("/connectedPage")}
       >
@@ -95,7 +96,7 @@ export default function ConnectedHeader() {
         </button>
 
         {menuOpen && (
-          <div className="absolute right-0 mt-4 w-52 bg-slate-900/95 backdrop-blur-lg text-white rounded-xl shadow-xl flex flex-col border border-slate-700/50 overflow-hidden animate-slideDown">
+          <div className="absolute right-0 mt-4 w-52 bg-slate-900/95 backdrop-blur-lg text-white rounded-xl shadow-xl flex flex-col border border-slate-700/50 overflow-hidden animate-slideDown z-50">
             {navLinks.map((link) => {
               const isExternal = link.href.startsWith("http");
 
