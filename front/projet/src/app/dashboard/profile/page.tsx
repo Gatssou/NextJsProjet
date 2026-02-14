@@ -139,7 +139,7 @@ export default function ProfilePage() {
                 Retour au dashboard
               </button>
             </div>
-          </div>
+          </div> 
         </div>
       </div>
         <Footer />

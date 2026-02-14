@@ -36,7 +36,7 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
       }
 
       setSuccess('Avatar mis à jour avec succès !');
-      // ✅ Ici TS sait que avatarUrl peut être string | null
+    
       onAvatarUpdate(data.user.avatarUrl);
 
       setTimeout(() => setSuccess(null), 3000);
@@ -67,7 +67,7 @@ export default function AvatarUploader({ user, onAvatarUpdate }: AvatarUploaderP
       }
 
       setSuccess('Avatar supprimé avec succès !');
-      onAvatarUpdate(null); // ✅ type correct
+      onAvatarUpdate(null); 
 
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: unknown) {
