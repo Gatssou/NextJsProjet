@@ -1,0 +1,9 @@
+User-agent: *
+Sitemap: https://next-js-projet-three.vercel.app/sitemap.xml
+
+# Bloquer les pages techniques
+Disallow: /api/
+Disallow: /admin/
+
+# Autoriser tout le reste
+Allow: /
